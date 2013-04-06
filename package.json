@@ -1,0 +1,27 @@
+{
+  "name": "tylr",
+  "version": "0.1.0",
+  "description": "A vector tile cache generator for geojson files",
+  "main": "tylr.js",
+  "scripts": {
+    "test": "vows --spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chelm/tylr.git"
+  },
+  "keywords": [
+    "geojson",
+    "vector tiles"
+  ],
+  "dependencies": {
+    "async": "*", 
+    "optimist": "*" 
+  },
+  "devDependencies": {
+    "vows": ">=0.7.0"
+  },
+  "author": "Chris Helm",
+  "license": "MIT",
+  "readmeFilename": "README.md"
+}
