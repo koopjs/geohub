@@ -5,11 +5,11 @@ Vector tile caching from GeoJSON files
 
 ## Install
 
-  npm install -g tylr 
+    npm install -g tylr 
 
 ## Usage 
 
-  tylr -f ./examples/us-states.json -d ./output -l 0,5
+    tylr -f ./examples/us-states.json -d ./output -l 0,5
 
   * Options
     
