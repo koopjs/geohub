@@ -16,10 +16,14 @@
   ],
   "dependencies": {
     "async": "*", 
+    "node-fs": "*", 
     "optimist": "*" 
   },
   "devDependencies": {
     "vows": ">=0.7.0"
+  },
+  "bin":{
+    "tylr": "bin/tylr"
   },
   "author": "Chris Helm",
   "license": "MIT",
