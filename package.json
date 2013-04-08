@@ -1,6 +1,6 @@
 {
   "name": "tylr",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A vector tile cache generator for geojson files",
   "main": "tylr.js",
   "scripts": {
