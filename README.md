@@ -13,8 +13,8 @@ Vector tile caching from GeoJSON files
 
   * Options
     
-    ** -f input geojson
+    -f input geojson
     
-    ** -d output dir
+    -d output dir
     
-    ** -l zoom levels ( 0 to 20 ) 
+    -l zoom levels ( 0 to 20 ) 
