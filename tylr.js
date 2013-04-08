@@ -9,17 +9,18 @@ module.exports = {
     console.log( file, dir, levels );
 
     if ( nfs.existsSync( file ) ) {
-  
+
       nfs.readFile( file, function( err, data ){
         console.log('data', data)
         var features = JSON.parse(data).features;
-  
+
         features.forEach(function( f ){
-          var ll = self.center( f.geometry );
+          //var ll = self.center( f.geometry );
+          var ll = self.centroid(f.geometry);
           console.log( ll );
-  
+
           var z = parseInt( levels[0] );
-  
+
           while ( z <= levels[ 1 ] ) {
             var xyz = self.location( ll[1], ll[0], z )
             self.q.push({ dir: dir, x: xyz.x, y: xyz.y, z: xyz.z, feature: f }, function (err) {} );
@@ -33,8 +34,69 @@ module.exports = {
 
   },
 
-  center: function( geom ){
+  centroid: function (geom) {
+    // http://en.wikipedia.org/wiki/Centroid#Centroid_of_polygon
 
+    function signedArea (coords) {
+      var sum = 0.0;
+
+      for (var i = 0, len = coords.length - 1; i < len; i++) {
+        var p1 = coords[i],
+            p2 = coords[i + 1];
+
+        sum += (p1[0] * p2[1]) - (p1[1] * p2[0]);
+      }
+
+      return 0.5 * sum;
+    }
+
+    function getCentroid (coords) {
+      var area = signedArea(coords);
+
+      if (area == 0) throw new Error('Invalid coordinates: ' + coords);
+
+      var p1, p2, f;
+      var x = 0.0,
+          y = 0.0;
+
+      for (var i = 0, len = coords.length - 1; i < len; i++) {
+        p1 = coords[i];
+        p2 = coords[i+1];
+
+        x += (p1[0] + p2[0]) * ((p1[0] * p2[1]) - (p2[0] * p1[1]));
+        y += (p1[1] + p2[1]) * ((p1[0] * p2[1]) - (p2[0] * p1[1]));
+      }
+
+      f = area * 6;
+
+      return [x/f, y/f];
+    }
+
+    if (geom.type == 'MultiPolygon') {
+      var centroids = [];
+
+      geom.coordinates[0].forEach(function (polygon) {
+        centroids.push(getCentroid(polygon));
+      });
+
+      if (centroids.length >= 3) {
+        centroids.push(centroids[0]);
+        return getCentroid(centroids);
+      } else if (centroids.length == 2) {
+        if (centroids[0] == centroids[1]) {
+          return centroids[0];
+        } else {
+          return [(centroids[0][0] + centroids[1][0]) / 2, (centroids[0][1] + centroids[1][1]) / 2];
+        }
+      } else if (centroids.length == 1) {
+        return centroids[0];
+      }
+    } else {
+      return getCentroid(geom.coordinates[0]);
+    }
+  },
+
+  center: function( geom ){
     var minx, miny, maxx, maxy;
 
     function adjust( c ){
@@ -63,8 +125,8 @@ module.exports = {
         miny = coords[0][1],
         maxx = coords[0][0],
         maxy = coords[0][1];
-      
-      adjust( geom.coordinates[0] ); 
+
+      adjust( geom.coordinates[0] );
     }
     return [ (maxx + minx) / 2, (maxy + miny) / 2 ];
   },
@@ -73,10 +135,10 @@ module.exports = {
     var lon_rad = lon * (Math.PI / 180),
       lat_rad = lat * (Math.PI / 180),
       n = Math.pow(2.0, zoom);
-  
+
     var tileX = Math.floor( ( ( lon + 180 ) / 360 ) * n );
     var tileY = Math.floor( ( 1 - ( Math.log( Math.tan( lat_rad ) + 1.0 / Math.cos( lat_rad ) ) / Math.PI ) ) * n / 2.0 );
-  
+
     return { x : tileX, y: tileY, z: zoom };
   },
 
@@ -104,7 +166,6 @@ module.exports = {
 
 
 };
-  
 
 /*function centroid( coords ){
   var area = 0;
