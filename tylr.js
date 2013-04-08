@@ -146,7 +146,7 @@ module.exports = {
   q: async.queue(function (task, callback) {
 
     var p = [task.dir, task.z, task.x].join('/');
-    var file = p + '/' + task.y + '.png';
+    var file = p + '/' + task.y + '.json';
 
     nfs.mkdir( p, '0777', true, function(){
       if ( !nfs.existsSync( file ) ) {
