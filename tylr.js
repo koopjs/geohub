@@ -6,18 +6,15 @@ module.exports = {
   tyle: function( file, dir, levels ){
     var self = this;
 
-    console.log( file, dir, levels );
-
     if ( nfs.existsSync( file ) ) {
 
       nfs.readFile( file, function( err, data ){
-        console.log('data', data)
         var features = JSON.parse(data).features;
 
         features.forEach(function( f ){
           //var ll = self.center( f.geometry );
           var ll = self.centroid(f.geometry);
-          console.log( ll );
+          //console.log( ll );
 
           var z = parseInt( levels[0] );
 
@@ -53,7 +50,11 @@ module.exports = {
     function getCentroid (coords) {
       var area = signedArea(coords);
 
-      if (area == 0) throw new Error('Invalid coordinates: ' + coords);
+      if (area == 0) {
+        console.log('Error: Invalid coordinates ' + coords);
+        return false;
+        //throw new Error('Invalid coordinates: ' + coords);
+      }
 
       var p1, p2, f;
       var x = 0.0,
