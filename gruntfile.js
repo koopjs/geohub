@@ -18,7 +18,7 @@ module.exports = function (grunt) {
           verbose: false,
           colors: true
         },
-        src: [ "test/*.js" ]
+        src: [ "tests/*.js" ]
       }
     }
   });

@@ -7,7 +7,7 @@ module.exports = {
     request.get(url, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         var files = JSON.parse( body ).files,
-          geojson;
+          geojson = [];
 
         for ( var f in files ){
           var file = files[f],
@@ -16,7 +16,7 @@ module.exports = {
           try {
             var json = JSON.parse( content );
             if (json.type && json.type == 'FeatureCollection'){
-              geojson = json;
+              geojson.push( json );
             }
           } catch (e){
             callback('Error: could not parse file contents'+e, null);
@@ -24,8 +24,9 @@ module.exports = {
 
         }
         // got some geojson 
-        if ( geojson ){
-          res.json( geojson );
+        if ( geojson.length ){
+          console.log(geojson);
+          callback( null, geojson );
         } else {
           callback('Error: could not find any geojson in gist #' + id, null);
         }
