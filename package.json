@@ -1,29 +1,27 @@
 {
-  "name": "tylr",
-  "version": "0.1.1",
-  "description": "A vector tile cache generator for geojson files",
-  "main": "tylr.js",
+  "name": "geohub",
+  "version": "0.1.0",
+  "description": "A geojson in github extractor",
+  "main": "geohub.js",
   "scripts": {
     "test": "vows --spec"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/chelm/tylr.git"
+    "url": "git://github.com/chelm/geohub.git"
   },
   "keywords": [
     "geojson",
-    "vector tiles"
+    "github"
   ],
   "dependencies": {
-    "async": "*", 
-    "node-fs": "*", 
-    "optimist": "*" 
+    "request":"2.22.0" 
   },
   "devDependencies": {
-    "vows": ">=0.7.0"
-  },
-  "bin":{
-    "tylr": "bin/tylr"
+    "vows": ">=0.7.0",
+    "grunt": "0.4.x",
+    "grunt-contrib-jshint": "0.3.x",
+    "grunt-vows": "0.4.x"
   },
   "author": "Chris Helm",
   "license": "MIT",

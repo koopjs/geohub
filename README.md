@@ -1,20 +1,19 @@
-tylr
+geohub 
 ====
 
-Vector tile caching from GeoJSON files
+Simple GeoJSON extractor from Github repos and Gists
 
 ## Install
 
-    npm install -g tylr 
+    npm install geohub
 
 ## Usage 
 
-    tylr -f ./examples/us-states.json -d ./output -l 0,5
+    // Extract GeoJSON from a gist 
+    Geohub = require('geohub');
+    var gist = :ID;
+    Geohub.gist( gist, function( err, data ){
+      console.log( data );
+    });
 
-  * Options
-    
-    -f input geojson
-    
-    -d output dir
-    
-    -l zoom levels ( 0 to 20 ) 
+    // Extract GeoJSON from a repo 
