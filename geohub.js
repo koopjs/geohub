@@ -25,7 +25,6 @@ module.exports = {
         }
         // got some geojson 
         if ( geojson.length ){
-          console.log(geojson);
           callback( null, geojson );
         } else {
           callback('Error: could not find any geojson in gist #' + id, null);
