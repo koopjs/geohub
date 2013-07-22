@@ -31,4 +31,4 @@ Simple GeoJSON extractor from Github repos and Gists
 
 ## Notes
 
-  * Was going to the use the node-github module but ran into some issues with access content. 
+  * Was going to the use the node-github module but ran into some issues with accessing content with it  
