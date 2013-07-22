@@ -24,3 +24,11 @@ Simple GeoJSON extractor from Github repos and Gists
     Geohub.github( user, repo, path, function( err, data ){
       console.log( data );
     });
+
+## Tests 
+
+    grunt vows
+
+## Notes
+
+  * Was going to the use the node-github module but ran into some issues with access content. 
