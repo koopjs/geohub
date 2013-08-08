@@ -12,7 +12,9 @@ Simple GeoJSON extractor from Github repos and Gists
     // Extract GeoJSON from a gist 
     Geohub = require('geohub');
     var gist = 6021269;
-    Geohub.gist( gist, function( err, data ){
+
+    // send the id 
+    Geohub.gist( { id: gist, token: '(optional) github_api_token', function( err, data ){
       console.log( data );
     });
 

@@ -8,7 +8,7 @@ var gist = 6021269;
 vows.describe('Gist Access').addBatch({
   'When requesting a gist with geojson the data are returned': {
     topic: function () {
-      Geohub.gist( gist , this.callback);
+      Geohub.gist( { id: gist }, this.callback);
     },
     'It should return the geojson': function (err, data) {
       assert.equal(err, null);

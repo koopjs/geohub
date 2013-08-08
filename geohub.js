@@ -19,8 +19,8 @@ module.exports = {
     });
   },
 
-  gist: function( id, callback ){
-    var url = 'https://api.github.com/gists/' + id;
+  gist: function( options, callback ){
+    var url = 'https://api.github.com/gists/' + options.id + ((options.token) ? '?access_token=' + options.token : '');
     request.get(url, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         var files = JSON.parse( body ).files,
