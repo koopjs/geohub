@@ -23,7 +23,7 @@ Simple GeoJSON extractor from Github repos and Gists
       repo = 'hurricanes'
       path = 'fl_2004_hurricanes';
 
-    Geohub.github( user, repo, path, function( err, data ){
+    Geohub.repo( user, repo, path, function( err, data ){
       console.log( data );
     });
 
