@@ -7,11 +7,11 @@ module.exports = {
     var url = 'https://raw.github.com/'+ user + '/' + repo + '/master/' + path + '.geojson';
     request(url, function( error, response, body ){
       if (!error && response.statusCode == 200) {
-      	var geojson = null;
+        var geojson = null;
         try {
           var json = JSON.parse( body );
           if (json.type && json.type == 'FeatureCollection'){
-          	geojson = json;
+            geojson = json;
           }
         } catch (e){
           callback('Error: could not parse file contents' + e, null);
@@ -19,14 +19,14 @@ module.exports = {
         }
         
         if ( geojson ) {
-        	callback( null, geojson );
+          callback( null, geojson );
         } else {
-        	callback('Error: could not find any geojson at ' + url, null);
+          callback('Error: could not find any geojson at ' + url, null);
         }
       } else if (response.statusCode == 404) {
-      	callback("File not found at: " + url, null);
+        callback("File not found at: " + url, null);
       } else {
-      	callback("Error '" + error + "' occurred reading from " + url, null);
+        callback("Error '" + error + "' occurred reading from " + url, null);
       }
     });
   },
@@ -59,9 +59,9 @@ module.exports = {
           callback('Error: could not find any geojson in gist #' + id, null);
         }
       } else if (response.statusCode == 404) {
-      	callback("Gist not found at: " + url, null);
+        callback("Gist not found at: " + url, null);
       } else {
-      	callback("Error '" + error + "' occurred reading from " + url, null);
+        callback("Error '" + error + "' occurred reading from " + url, null);
       }
     });
     
