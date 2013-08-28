@@ -104,7 +104,7 @@ module.exports = {
           try {
             var json = JSON.parse( content );
             if (json.type && json.type == 'FeatureCollection'){
-              geojson.name = file.filename;
+              json.name = file.filename;
               geojson.push( json );
             }
           } catch (e){
