@@ -1,6 +1,6 @@
 {
   "name": "geohub",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A geojson in github extractor",
   "main": "geohub.js",
   "scripts": {
