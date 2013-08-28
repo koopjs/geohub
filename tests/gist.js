@@ -17,5 +17,17 @@ vows.describe('Gist Access').addBatch({
       assert.equal(data[0].type, 'FeatureCollection');
       assert.equal(data[0].features.length, 1);
     }
+  },
+  'When requesting a gist with many files': {
+    topic: function () {
+      Geohub.gist( { id: 6178185 }, this.callback);
+    },
+    'It should return the geojson for each file': function (err, data) {
+      assert.equal(err, null);
+      assert.notEqual(data, null);
+      assert.equal(data.length, 2);
+      //assert.equal(data[0].type, 'FeatureCollection');
+      //assert.equal(data[0].features.length, 1);
+    }
   }
 }).export(module);

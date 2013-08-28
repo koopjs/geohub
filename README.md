@@ -19,12 +19,18 @@ Simple GeoJSON extractor from Github repos and Gists
     });
 
     // Extract GeoJSON from a repo 
-    var user = 'colemanm', 
-      repo = 'hurricanes'
-      path = 'fl_2004_hurricanes';
+    var user = 'chelm', 
+      repo = 'grunt-geo'
+      path = 'forks';
 
     Geohub.repo( user, repo, path, function( err, data ){
       console.log( data );
+    });
+
+    // You can also return all geojson in repo 
+    Geohub.repo( user, repo, null, function( err, data ){
+      console.log( data.length );
+      // logs out: 3 
     });
 
 ## Tests 
