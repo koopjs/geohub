@@ -27,7 +27,7 @@ vows.describe('Repo Access').addBatch({
       assert.notEqual(data, null);
       assert.notEqual(data.length, 0);
       assert.equal(data.length, 3);
-      console.log(data);
-    }
+      assert.equal(data[0].name, 'collaborators.geojson');
+    },
   }
 }).export(module);

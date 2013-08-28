@@ -26,6 +26,7 @@ vows.describe('Gist Access').addBatch({
       assert.equal(err, null);
       assert.notEqual(data, null);
       assert.equal(data.length, 2);
+      assert.equal(data[0].name, 'map.geojson');
       //assert.equal(data[0].type, 'FeatureCollection');
       //assert.equal(data[0].features.length, 1);
     }

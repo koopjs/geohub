@@ -76,6 +76,7 @@ module.exports = {
           try {
             json = JSON.parse( body );
             if (json.type && json.type == 'FeatureCollection'){
+              json.name = f.name;
               data.push( json );
             }
           } catch (e){
@@ -103,6 +104,7 @@ module.exports = {
           try {
             var json = JSON.parse( content );
             if (json.type && json.type == 'FeatureCollection'){
+              geojson.name = file.filename;
               geojson.push( json );
             }
           } catch (e){
