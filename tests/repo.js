@@ -16,6 +16,17 @@ vows.describe('Repo Access').addBatch({
       assert.equal(err, null);
       assert.notEqual(data, null);
       assert.equal(data.type, 'FeatureCollection');
+      assert.notEqual(data.sha, null);
+    }
+  },
+  'when checking the sha of a file': {
+     topic: function () {
+      Geohub.repoSha( user, repo, 'forks.geojson', this.callback);
+    },
+    'It should return a sha': function (err, data) {
+      assert.equal(err, null);
+      assert.notEqual(data, null);
+      assert.equal(data, "e3729d510e786be80126225579214a78cf06e7a1");
     }
   },
   'when only passing in a user/repo': {
@@ -28,6 +39,7 @@ vows.describe('Repo Access').addBatch({
       assert.notEqual(data.length, 0);
       assert.equal(data.length, 3);
       assert.equal(data[0].name, 'collaborators.geojson');
+      assert.notEqual(data[0].sha, null);
     },
   }
 }).export(module);

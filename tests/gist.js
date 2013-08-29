@@ -16,6 +16,7 @@ vows.describe('Gist Access').addBatch({
       assert.equal(data.length, 1);
       assert.equal(data[0].type, 'FeatureCollection');
       assert.equal(data[0].features.length, 1);
+      assert.notEqual(data[0].updated_at, null);
     }
   },
   'When requesting a gist with many files': {
@@ -27,6 +28,7 @@ vows.describe('Gist Access').addBatch({
       assert.notEqual(data, null);
       assert.equal(data.length, 2);
       assert.equal(data[0].name, 'map.geojson');
+      assert.notEqual(data[0].updated_at, null);
       //assert.equal(data[0].type, 'FeatureCollection');
       //assert.equal(data[0].features.length, 1);
     }

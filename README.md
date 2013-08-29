@@ -27,10 +27,15 @@ Simple GeoJSON extractor from Github repos and Gists
       console.log( data );
     });
 
-    // You can also return all geojson in repo 
+    // return all geojson files in repo 
     Geohub.repo( user, repo, null, function( err, data ){
       console.log( data.length );
       // logs out: 3 
+    });
+
+    // check a files sha (useful for caching)
+    Geohub.repoSha( user, repo, path, function( err, sha ){
+      console.log( sha);
     });
 
 ## Tests 
