@@ -35,7 +35,7 @@ vows.describe('Gist Access').addBatch({
   },
   'when getting the sha for a gist': {
     topic: function () {
-      Geohub.gistSha( 6021269, this.callback);
+      Geohub.gistSha( 6021269, null, this.callback);
     },
     'It should return a string': function (err, data) {
       assert.equal(err, null);

@@ -10,7 +10,7 @@ var repo = 'grunt-geo',
 vows.describe('Repo Access').addBatch({
   'When requesting geojson from a repo with geojson data are returned': {
     topic: function () {
-      Geohub.repo( user, repo, path, this.callback);
+      Geohub.repo( user, repo, path, null, this.callback);
     },
     'It should return the geojson': function (err, data) {
       assert.equal(err, null);
@@ -21,7 +21,7 @@ vows.describe('Repo Access').addBatch({
   },
   'when checking the sha of a file': {
      topic: function () {
-      Geohub.repoSha( user, repo, 'forks.geojson', this.callback);
+      Geohub.repoSha( user, repo, 'forks.geojson', null, this.callback);
     },
     'It should return a sha': function (err, data) {
       assert.equal(err, null);
@@ -31,7 +31,7 @@ vows.describe('Repo Access').addBatch({
   },
   'when only passing in a user/repo': {
     topic: function () {
-      Geohub.repo( user, repo, null, this.callback);
+      Geohub.repo( user, repo, null, null, this.callback);
     },
     'It should return an array of geojson data': function (err, data) {
       assert.equal(err, null);

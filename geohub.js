@@ -3,11 +3,11 @@ var request = require('request');
 module.exports = {
 
   // scan repo for "geojson files"
-  repo: function( user, repo, path, callback ){
+  repo: function( user, repo, path, token, callback ){
     var self = this, 
       url;
     if ( user && repo && path ){ 
-      url = 'https://api.github.com/repos/'+ user + '/' + repo + '/contents/' + path + '.geojson';
+      url = 'https://api.github.com/repos/'+ user + '/' + repo + '/contents/' + path + '.geojson' + ((token) ? '?access_token=' + token : '');
       request(url, function( error, response, body ){
         if (!error && response.statusCode == 200) {
           var file = JSON.parse(body);
@@ -45,7 +45,7 @@ module.exports = {
       });
     } else if ( user && repo ){
       // scan the repo contents 
-      url = 'https://api.github.com/repos/'+ user + '/' + repo + '/contents';
+      url = 'https://api.github.com/repos/'+ user + '/' + repo + '/contents' + ((token) ? '?access_token=' + token : '');
       request(url, function( error, response, body ){
         if (!error && response.statusCode == 200) {
           var files = [];
@@ -69,8 +69,8 @@ module.exports = {
     }
   },
 
-  repoSha: function( user, repo, path, callback ){
-    var url = 'https://api.github.com/repos/'+ user + '/' + repo + '/contents/' + path;
+  repoSha: function( user, repo, path, token, callback ){
+    var url = 'https://api.github.com/repos/'+ user + '/' + repo + '/contents/' + path + ((token) ? '?access_token=' + token : '');
     request(url, function( error, response, body ){
       if (!error && response.statusCode == 200) {
         body = JSON.parse(body);
@@ -156,8 +156,8 @@ module.exports = {
     });
   },
 
-  gistSha: function( id, callback ){
-    var url = 'https://api.github.com/gists/' + id;
+  gistSha: function( id, token, callback ){
+    var url = 'https://api.github.com/gists/' + id + ((token) ? '?access_token=' + token : '');
     request(url, function( error, response, body ){
       if (!error && response.statusCode == 200) {
         body = JSON.parse(body);
