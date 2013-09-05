@@ -32,5 +32,15 @@ vows.describe('Gist Access').addBatch({
       //assert.equal(data[0].type, 'FeatureCollection');
       //assert.equal(data[0].features.length, 1);
     }
+  },
+  'when getting the sha for a gist': {
+    topic: function () {
+      Geohub.gistSha( 6021269, this.callback);
+    },
+    'It should return a string': function (err, data) {
+      assert.equal(err, null);
+      assert.notEqual(data, null);
+      assert.equal(data, "2013-07-17T14:49:41Z");
+    }
   }
 }).export(module);

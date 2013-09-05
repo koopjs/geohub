@@ -154,6 +154,21 @@ module.exports = {
         callback("Error '" + error + "' occurred reading from " + url, null);
       }
     });
-    
+  },
+
+  gistSha: function( id, callback ){
+    var url = 'https://api.github.com/gists/' + id;
+    request(url, function( error, response, body ){
+      if (!error && response.statusCode == 200) {
+        body = JSON.parse(body);
+        if ( body.message ){
+          callback( body.message, null);
+        } else {
+          callback( null, body.updated_at );
+        }
+      } else {
+        callback('Error: could not get gist at '+ url, null);
+      }
+    });
   }
 };
