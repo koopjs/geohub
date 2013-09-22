@@ -15,8 +15,9 @@
     "github"
   ],
   "dependencies": {
-    "request":"2.22.0",
-    "github":"0.1.10" 
+    "request": "2.22.0",
+    "github": "0.1.10",
+    "async": "~0.2.9"
   },
   "devDependencies": {
     "vows": ">=0.7.0",
