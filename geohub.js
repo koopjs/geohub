@@ -2,46 +2,87 @@ var request = require('request');
 
 module.exports = {
 
+  apiBase: 'https://api.github.com',
+
+  request: function(url, callback){
+     request(url, function( error, response, body ){
+        callback(error, JSON.parse(body));
+     });
+  },
+
   // scan repo for "geojson files"
   repo: function( user, repo, path, token, callback ){
     var self = this, 
       url;
-    if ( user && repo && path ){ 
-      url = 'https://api.github.com/repos/'+ user + '/' + repo + '/contents/' + path + '.geojson' + ((token) ? '?access_token=' + token : '');
-      request(url, function( error, response, body ){
-        if (!error && response.statusCode == 200) {
-          var file = JSON.parse(body);
-          var name = file.name;
-          var sha = file.sha;
-          url = 'https://raw.github.com/'+ user + '/' + repo + '/master/' + path + '.geojson';
-          request(url, function( error, response, body ){
-            if (!error && response.statusCode == 200) {
-              var geojson = null;
-              try {
-                var json = JSON.parse( body );
-                if (json.type && json.type == 'FeatureCollection'){
-                  json.name = name;
-                  json.sha = sha;
-                  geojson = json;
-                }
-              } catch (e){
-                callback('Error: could not parse file contents' + e, null);
-                return;
-              }
+    if ( user && repo && path ){
+      // check the contents 
+      var contentsUrl = this.apiBase + '/repos/' + user + '/' + repo + '/contents/';
+      this.request(contentsUrl, function(err, data){
+        var isDir = false;
+        data.forEach(function( f ){
+          if ( f.name == path && f.type == 'dir'){
+            isDir = true;
+          } 
+        });
 
-              if ( geojson ) {
-                callback( null, geojson );
+        if (isDir){
+          url = self.apiBase + '/repos/'+ user + '/' + repo + '/contents/' + path + ((token) ? '?access_token=' + token : '');
+          request( url, function( error, response, body ){
+            if ( !error && response.statusCode == 200 ) {
+              var files = [];
+              var json = JSON.parse( body );
+              json.forEach(function( file ){
+                if (file.name.match(/geojson/)){
+                  files.push(file);
+                }
+              });
+              if ( files.length ){
+                self.getRepoFiles( 'https://raw.github.com/'+ user + '/' + repo + '/master/' + path + '/', files, callback );
               } else {
                 callback('Error: could not find any geojson at ' + url, null);
               }
-            } else if (response.statusCode == 404) {
-              callback("File not found at: " + url, null);
             } else {
-              callback("Error '" + error + "' occurred reading from " + url, null);
+              callback('Error: ' + error, null);
             }
-          
           });
-        }  
+        } else {
+          url = 'https://api.github.com/repos/'+ user + '/' + repo + '/contents/' + path + '.geojson' + ((token) ? '?access_token=' + token : '');
+          request(url, function( error, response, body ){
+            if (!error && response.statusCode == 200) {
+              var file = JSON.parse(body);
+              var name = file.name;
+              var sha = file.sha;
+              url = 'https://raw.github.com/'+ user + '/' + repo + '/master/' + path + '.geojson';
+              request(url, function( error, response, body ){
+                if (!error && response.statusCode == 200) {
+                  var geojson = null;
+                  try {
+                    var json = JSON.parse( body );
+                    if (json.type && json.type == 'FeatureCollection'){
+                      json.name = name;
+                      json.sha = sha;
+                      geojson = json;
+                    }
+                  } catch (e){
+                    callback('Error: could not parse file contents' + e, null);
+                    return;
+                  }
+
+                  if ( geojson ) {
+                    callback( null, geojson );
+                  } else {
+                    callback('Error: could not find any geojson at ' + url, null);
+                  }
+                } else if (response.statusCode == 404) {
+                  callback("File not found at: " + url, null);
+                } else {
+                  callback("Error '" + error + "' occurred reading from " + url, null);
+                }
+              
+              });
+            }  
+          });
+        }
       });
     } else if ( user && repo ){
       // scan the repo contents 

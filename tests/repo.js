@@ -41,5 +41,16 @@ vows.describe('Repo Access').addBatch({
       assert.equal(data[0].name, 'collaborators.geojson');
       assert.notEqual(data[0].sha, null);
     },
+  },
+  'when only passing in a user/repo with a path that is a dir': {
+    topic: function () {
+      Geohub.repo( user, repo, 'samples', null, this.callback);
+    },
+    'It should return an array of geojson data': function (err, data) {
+      assert.equal(err, null);
+      assert.notEqual(data, null);
+      assert.equal(data.length, 7);
+    },
   }
+
 }).export(module);
