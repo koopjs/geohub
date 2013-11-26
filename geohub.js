@@ -6,7 +6,7 @@ module.exports = {
   apiBase: 'https://api.github.com',
 
   request: function(url, callback){
-     request(url, function( error, response, body ){
+     request({url:url, headers: {'User-Agent':'geohub'}}, function( error, response, body ){
         callback(error, JSON.parse(body));
      });
   },
@@ -28,7 +28,7 @@ module.exports = {
 
         if (isDir){
           url = self.apiBase + '/repos/'+ user + '/' + repo + '/contents/' + path + ((token) ? '?access_token=' + token : '');
-          request( url, function( error, response, body ){
+          request( {url:url, headers: {'User-Agent':'geohub'}}, function( error, response, body ){
             if ( !error && response.statusCode == 200 ) {
               var files = [];
               var json = JSON.parse( body );
@@ -47,7 +47,10 @@ module.exports = {
             }
           });
         } else {
-          var urls = ['https://api.github.com/repos/' + user + '/' + repo + '/contents/' + path + '.geojson' + ((token) ? '?      access_token=' + token : ''), 'https://raw.github.com/' + user + '/' + repo + '/master/' + path + '.geojson'];
+          var urls = [
+            'https://api.github.com/repos/' + user + '/' + repo + '/contents/' + path + '.geojson' + ((token) ? '?      access_token=' + token : ''), 
+            'https://raw.github.com/' + user + '/' + repo + '/master/' + path + '.geojson'
+          ];
 
           function dealWithJson(err, files) {
               if (err) {
@@ -70,14 +73,8 @@ module.exports = {
               }
           };
           async.map(urls, function (url, cb) {
-              request(url, {
-                  json: true
-              }, function (err, response, file) {
-                  if (err || response.statusCode < 200) {
-                      cb(err || response.statusCode)
-                  } else {
-                      cb(null, file);
-                  }
+              self.request(url, function (err, data) {
+                  cb(err, data);
               });
           }, dealWithJson);
         }
@@ -86,7 +83,7 @@ module.exports = {
     } else if ( user && repo ){
       // scan the repo contents 
       url = 'https://api.github.com/repos/'+ user + '/' + repo + '/contents' + ((token) ? '?access_token=' + token : '');
-      request(url, function( error, response, body ){
+      request({url:url, headers: {'User-Agent':'geohub'}}, function( error, response, body ){
         if (!error && response.statusCode == 200) {
           var files = [];
           var json = JSON.parse( body );
@@ -174,7 +171,7 @@ module.exports = {
 
   repoSha: function (user, repo, path, token, callback) {
         var url = 'https://api.github.com/repos/' + user + '/' + repo + '/contents/' + path + ((token) ? '?access_token=' + token : '');
-        request(url, function (error, response, body) {
+        request({url:url, headers: {'User-Agent':'geohub'}}, function (error, response, body) {
             if (!error && response.statusCode === 200) {
                 body = JSON.parse(body);
                 if (body.message) {
@@ -202,7 +199,7 @@ module.exports = {
         };
 
         files.forEach(function (f) {
-            request(url + f.name, function (error, response, body) {
+            request({url:url + f.name, headers: {'User-Agent':'geohub'}}, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     try {
                         json = JSON.parse(body);
@@ -224,7 +221,7 @@ module.exports = {
 
     gist: function (options, callback) {
         var url = 'https://api.github.com/gists/' + options.id + ((options.token) ? '?access_token=' + options.token : '');
-        request.get(url, function (error, response, body) {
+        request.get({url:url, headers: {'User-Agent':'geohub'}}, function (error, response, body) {
             if (!error && response.statusCode === 200) {
                 body = JSON.parse(body);
                 geojson = [];
@@ -261,7 +258,7 @@ module.exports = {
 
     gistSha: function (id, token, callback) {
         var url = 'https://api.github.com/gists/' + id + ((token) ? '?access_token=' + token : '');
-        request(url, function (error, response, body) {
+        request({url:url, headers: {'User-Agent':'geohub'}}, function (error, response, body) {
             if (!error && response.statusCode === 200) {
                 body = JSON.parse(body);
                 if (body.message) {
