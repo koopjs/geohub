@@ -227,10 +227,12 @@ module.exports = {
                 geojson = [];
 
                 for (var f in body.files) {
+                    console.log(f);
                     var file = body.files[f],
                         content = file.content;
 
                     try {
+                        console.log('parse', content)
                         var json = JSON.parse(content);
                         if (json.type && json.type === 'FeatureCollection') {
                             json.name = file.filename;
@@ -246,7 +248,7 @@ module.exports = {
                 if (geojson.length) {
                     callback(null, geojson);
                 } else {
-                    callback('Error: could not find any geojson in gist #' + id, null);
+                    callback('Error: could not find any geojson in gist #' + options.id, null);
                 }
             } else if (response.statusCode === 404) {
                 callback("Gist not found at: " + url, null);

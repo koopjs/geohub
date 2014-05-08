@@ -21,7 +21,7 @@ vows.describe('Gist Access').addBatch({
   },
   'When requesting a gist with many files': {
     topic: function () {
-      Geohub.gist( { id: 6178185 }, this.callback);
+      Geohub.gist( { id: '45b401a452cd69e0d5f1' }, this.callback);
     },
     'It should return the geojson for each file': function (err, data) {
       assert.equal(err, null);
