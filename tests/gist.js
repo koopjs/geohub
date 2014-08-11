@@ -8,7 +8,7 @@ var gist = 6021269;
 vows.describe('Gist Access').addBatch({
   'When requesting a gist with geojson the data are returned': {
     topic: function () {
-      Geohub.gist( { id: gist }, this.callback);
+      Geohub.gist( { id: gist, token: "072a8daf8c75c9551a586e4d60905cfde0e01d69" }, this.callback);
     },
     'It should return the geojson': function (err, data) {
       assert.equal(err, null);
@@ -21,6 +21,7 @@ vows.describe('Gist Access').addBatch({
   },
   'When requesting a gist with many files': {
     topic: function () {
+      //Geohub.gist( { id: '106b609975d743c1b516', token: "072a8daf8c75c9551a586e4d60905cfde0e01d69" }, this.callback);
       Geohub.gist( { id: '45b401a452cd69e0d5f1' }, this.callback);
     },
     'It should return the geojson for each file': function (err, data) {
@@ -35,7 +36,7 @@ vows.describe('Gist Access').addBatch({
   },
   'when getting the sha for a gist': {
     topic: function () {
-      Geohub.gistSha( 6021269, null, this.callback);
+      Geohub.gistSha( gist, null, this.callback);
     },
     'It should return a string': function (err, data) {
       assert.equal(err, null);

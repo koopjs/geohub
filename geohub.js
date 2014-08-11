@@ -15,6 +15,28 @@ module.exports = {
   repo: function( user, repo, path, token, callback ){
     var self = this, 
       url;
+
+    var dealWithJson = function(err, files) {
+        if (err) {
+            return callback(err);
+        }
+        var file = files[0];
+        var json = files[1];
+        var name = file.name;
+        var sha = file.sha;
+        var geojson = null;
+        if (json.type && json.type === 'FeatureCollection') {
+            json.name = name;
+            json.sha = sha;
+            geojson = json;
+        }
+        if (geojson) {
+            callback(null, geojson);
+        } else {
+            callback('Error: could not find any geojson, ' + err, null);
+        }
+    };
+
     if ( user && repo && path ){
       // check the contents (checks for dirs as the path) 
       var contentsUrl = this.apiBase + '/repos/' + user + '/' + repo + '/contents/';
@@ -52,26 +74,6 @@ module.exports = {
             'https://raw.github.com/' + user + '/' + repo + '/master/' + path + '.geojson'
           ];
 
-          function dealWithJson(err, files) {
-              if (err) {
-                  return callback(err);
-              }
-              var file = files[0];
-              var json = files[1];
-              var name = file.name;
-              var sha = file.sha;
-              var geojson = null;
-              if (json.type && json.type === 'FeatureCollection') {
-                  json.name = name;
-                  json.sha = sha;
-                  geojson = json;
-              }
-              if (geojson) {
-                  callback(null, geojson);
-              } else {
-                  callback('Error: could not find any geojson, ' + err, null);
-              }
-          };
           async.map(urls, function (url, cb) {
               self.request(url, function (err, data) {
                   cb(err, data);
@@ -227,12 +229,10 @@ module.exports = {
                 geojson = [];
 
                 for (var f in body.files) {
-                    console.log(f);
                     var file = body.files[f],
                         content = file.content;
 
                     try {
-                        console.log('parse', content)
                         var json = JSON.parse(content);
                         if (json.type && json.type === 'FeatureCollection') {
                             json.name = file.filename;
@@ -240,7 +240,7 @@ module.exports = {
                             geojson.push(json);
                         }
                     } catch (e) {
-                        callback('Error: could not parse file contents' + e, null);
+                        callback('Error: could not parse file contents ' + e, null);
                     }
 
                 }
