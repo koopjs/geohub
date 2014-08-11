@@ -7,7 +7,12 @@ module.exports = {
 
   request: function(url, callback){
      request({url:url, headers: {'User-Agent':'geohub'}}, function( error, response, body ){
-        callback(error, JSON.parse(body));
+        try {
+          var json = JSON.parse(body);
+          callback(error, JSON.parse(body));
+        } catch(e){
+          callback('Failed to parse JSON from '+url, null);
+        }
      });
   },
 
@@ -41,6 +46,11 @@ module.exports = {
       // check the contents (checks for dirs as the path) 
       var contentsUrl = this.apiBase + '/repos/' + user + '/' + repo + '/contents/';
       this.request(contentsUrl, function(err, data){
+        if (err){
+          callback( 'Trouble requesting data from ' + url, null );
+          return;
+        }
+
         var isDir = false;
         data.forEach(function( f ){
           if ( f.name == path && f.type == 'dir'){
