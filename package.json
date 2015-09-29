@@ -2,7 +2,7 @@
   "name": "geohub",
   "version": "0.3.2",
   "description": "A geojson in github extractor",
-  "main": "geohub.js",
+  "main": "index.js",
   "scripts": {
     "test": "vows --spec"
   },
