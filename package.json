@@ -20,9 +20,6 @@
     "async": "~0.2.9"
   },
   "devDependencies": {
-    "grunt": "0.4.x",
-    "grunt-contrib-jshint": "0.3.x",
-    "grunt-vows": "0.4.x",
     "standard": "^5.3.1",
     "vows": ">=0.7.0"
   },
