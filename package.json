@@ -16,7 +16,6 @@
   ],
   "dependencies": {
     "async": "^0.2.10",
-    "github": "^0.1.10",
     "request": "^2.22.0"
   },
   "devDependencies": {
