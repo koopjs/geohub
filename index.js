@@ -118,69 +118,6 @@ module.exports = {
     }
   },
 
-
-    // scan repo for "geojson files"
-    /*repo: function (user, repo, path, token, callback) {
-        if (user && repo && path) {
-            var urls = ['https://api.github.com/repos/' + user + '/' + repo + '/contents/' + path + '.geojson' + ((token) ? '?access_token=' + token : ''), 'https://raw.github.com/' + user + '/' + repo + '/master/' + path + '.geojson'];
-
-            function dealWithJson(err, files) {
-                if (err) {
-                    return callback(err);
-                }
-                var file = files[0];
-                var json = files[1];
-                var name = file.name;
-                var sha = file.sha;
-                var geojson = null;
-                if (json.type && json.type === 'FeatureCollection') {
-                    json.name = name;
-                    json.sha = sha;
-                    geojson = json;
-                }
-                if (geojson) {
-                    callback(null, geojson);
-                } else {
-                    callback('Error: could not find any geojson at ' + url, null);
-                }
-            };
-            async.map(urls, function (url, cb) {
-                request(url, {
-                    json: true
-                }, function (err, response, file) {
-                    if (err || response.statusCode < 200) {
-                        cb(err || response.statusCode)
-                    } else {
-                        cb(null, file);
-                    }
-                });
-            }, dealWithJson)
-        } else if (user && repo) {
-            // scan the repo contents
-            url = 'https://api.github.com/repos/' + user + '/' + repo + '/contents' + ((token) ? '?access_token=' + token : '');
-            request(url, function (error, response, body) {
-                if (!error && response.statusCode === 200) {
-                    var files = [];
-                    var json = JSON.parse(body);
-                    json.forEach(function (file) {
-                        if (file.name.match(/geojson/)) {
-                            files.push(file);
-                        }
-                    });
-                    if (files.length) {
-                        self.getRepoFiles('https://raw.github.com/' + user + '/' + repo + '/master/', files, callback);
-                    } else {
-                        callback('Error: could not find any geojson at ' + url, null);
-                    }
-                } else {
-                    callback('Error: ' + error);
-                }
-            });
-        } else {
-            callback("Error: must specify at least a username and repo");
-        }
-    },*/
-
   repoSha: function (user, repo, path, token, callback) {
         var url = 'https://api.github.com/repos/' + user + '/' + repo + '/contents/' + path + ((token) ? '?access_token=' + token : '');
         request({url:url, headers: {'User-Agent':'geohub'}}, function (error, response, body) {
