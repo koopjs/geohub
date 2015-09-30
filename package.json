@@ -1,6 +1,6 @@
 {
   "name": "geohub",
-  "description": "A geojson in github extractor",
+  "description": "GeoJSON extractor for Github repos and gists.",
   "version": "0.3.2",
   "author": "Chris Helm",
   "bugs": "https://github.com/koopjs/geohub/issues",

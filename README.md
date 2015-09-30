@@ -1,47 +1,83 @@
-geohub 
-====
+# geohub
 
-Simple GeoJSON extractor from Github repos and Gists
+> GeoJSON extractor for Github repos and gists.
+
+[![version][npm-img]][npm-url]
+
+[npm-img]: https://img.shields.io/npm/v/geohub.svg?style=flat-square
+[npm-url]: https://www.npmjs.com/package/geohub
+
+Extracts and parses GeoJSON files from Github repos and gists using the Github API.
 
 ## Install
 
-    npm install geohub
+```
+npm install geohub
+```
 
-## Usage 
+## Usage
 
-    // Extract GeoJSON from a gist 
-    Geohub = require('geohub');
-    var gist = 6021269;
+```js
+geohub = require('geohub')
 
-    // send the id 
-    Geohub.gist( { id: gist, token: '(optional) github_api_token', function( err, data ){
-      console.log( data );
-    });
+var user = 'chelm'
+var repo = 'grunt-geo'
+var path = 'forks'
 
-    // Extract GeoJSON from a repo 
-    var user = 'chelm', 
-      repo = 'grunt-geo'
-      path = 'forks';
+// Extract GeoJSON from a specific path in a repository
+geohub.repo({
+  user: user,  // username
+  repo: repo,  // repository
+  path: path,  // path to file
+  token: token // github API token
+}, function (err, data) {
+  if (err) throw err
+  console.log(data)
+  // => data is an array of geojson objects
+})
 
-    Geohub.repo( user, repo, path, function( err, data ){
-      console.log( data );
-    });
+// Omit the 'path' option to extract all GeoJSON files from a repository
+geohub.repo({
+  user: user,  // username
+  repo: repo,  // repository
+  token: token // github API token
+}, function (err, data) {
+  if (err) throw err
+  console.log(data)
+  // => data is an array of geojson objects
+})
 
-    // return all geojson files in repo 
-    Geohub.repo( user, repo, null, function( err, data ){
-      console.log( data.length );
-      // logs out: 3 
-    });
+// Check a file's SHA (useful for caching)
+geohub.repoSha({
+  user: user,  // username
+  repo: repo,  // repository
+  path: path,  // path to file
+  token: token // github API token
+}, function (err, sha) {
+  if (err) throw err
+  console.log(sha)
+  // => SHA string
+})
 
-    // check a files sha (useful for caching)
-    Geohub.repoSha( user, repo, path, function( err, sha ){
-      console.log( sha);
-    });
+// Extract GeoJSON from a gist
+geohub.gist({
+  id: 6021269, // gist ID
+  token: token // github API token
+}, function (err, data) {
+  if (err) throw err
+  console.log(data)
+  // => data is an array of geojson objects
+})
+```
 
-## Tests 
+## Test
 
-    grunt vows
+Geohub uses [tape](https://github.com/substack/tape) for testing. It is recommended to create your own Github [access token](https://github.com/settings/tokens) for use during testing to ensure you will not hit Github API rate limits.
 
-## Notes
+```
+GITHUB_TOKEN=XXXXXX npm test
+```
 
-  * Was going to the use the node-github module but ran into some issues with accessing content with it  
+## License
+
+[MIT](LICENSE)
