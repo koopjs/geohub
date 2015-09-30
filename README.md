@@ -31,23 +31,37 @@ var path = 'forks'
 geohub.repo({
   user: user,  // username
   repo: repo,  // repository
-  path: path,  // path to file
-  token: token // github API token
+  path: path,  // path to file or directory
+  token: token // github access token
 }, function (err, data) {
   if (err) throw err
   console.log(data)
-  // => data is an array of geojson objects
+  // => if path is a directory, data is an array of geojson objects
+  // => if path is a filename (omit .geojson extension), data is a geojson object
 })
 
 // Omit the 'path' option to extract all GeoJSON files from a repository
 geohub.repo({
   user: user,  // username
   repo: repo,  // repository
-  token: token // github API token
+  token: token // github access token
 }, function (err, data) {
   if (err) throw err
   console.log(data)
   // => data is an array of geojson objects
+})
+
+// You can also extract GeoJSON from a specific branch of a repo
+geohub.repo({
+  user: 'koopjs',           // username
+  repo: 'geohub',           // repository
+  branch: 'do-not-delete',  // branch name
+  path: 'portland-parks',   // path to file or directory
+  token: token              // github access token
+}, function (err, data) {
+  if (err) throw err
+  console.log(data)
+  // => data is a geojson object
 })
 
 // Check a file's SHA (useful for caching)
@@ -55,7 +69,7 @@ geohub.repoSha({
   user: user,  // username
   repo: repo,  // repository
   path: path,  // path to file
-  token: token // github API token
+  token: token // github access token
 }, function (err, sha) {
   if (err) throw err
   console.log(sha)
@@ -65,7 +79,7 @@ geohub.repoSha({
 // Extract GeoJSON from a gist
 geohub.gist({
   id: 6021269, // gist ID
-  token: token // github API token
+  token: token // github access token
 }, function (err, data) {
   if (err) throw err
   console.log(data)

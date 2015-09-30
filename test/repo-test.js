@@ -70,3 +70,36 @@ test('When only passing in a user/repo with a path that is a dir', function (t) 
     t.end()
   })
 })
+
+test('When passing user, repo, and branch', function (t) {
+  geohub.repo({
+    user: 'koopjs',
+    repo: 'geohub',
+    branch: 'do-not-delete',
+    token: token
+  }, function (err, data) {
+    t.error(err, 'does not error')
+    t.ok(data, 'data exists')
+    t.ok(data[0].sha, 'object 1 has sha property')
+    t.equal(data[0].type, 'FeatureCollection', 'object 1 is FeatureCollection')
+    t.ok(data[0].features.length > 0, 'object 1 has features')
+    t.end()
+  })
+})
+
+test('When passing user, repo, path, and branch', function (t) {
+  geohub.repo({
+    user: 'koopjs',
+    repo: 'geohub',
+    path: 'portland-parks',
+    branch: 'do-not-delete',
+    token: token
+  }, function (err, data) {
+    t.error(err, 'does not error')
+    t.ok(data, 'data exists')
+    t.ok(data.sha, 'data has sha property')
+    t.equal(data.type, 'FeatureCollection', 'data is FeatureCollection')
+    t.ok(data.features.length > 0, 'data has features')
+    t.end()
+  })
+})
