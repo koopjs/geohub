@@ -20,5 +20,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * modularized & simplified code
 * improved readme
 
+### Added
+* add support for specifying branch ([#4](https://github.com/koopjs/geohub/issues/4))
+
 ## 0.3.2 - 2014-08-11
 * legacy release
