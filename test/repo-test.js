@@ -1,12 +1,12 @@
 var vows = require('vows')
 var assert = require('assert')
 var Geohub = require('../')
-var repo = 'grunt-geo'
 var user = 'chelm'
+var repo = 'grunt-geo'
 var path = 'forks'
 
 vows.describe('Repo Access').addBatch({
-  'When requesting geojson from a repo with geojson data are returned': {
+  'When requesting geojson from a repo with geojson': {
     topic: function () {
       Geohub.repo(user, repo, path, null, this.callback)
     },
