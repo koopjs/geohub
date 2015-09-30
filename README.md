@@ -2,10 +2,13 @@
 
 > GeoJSON extractor for Github repos and gists.
 
-[![version][npm-img]][npm-url]
+[![npm version][npm-img]][npm-url]
+[![build status][travis-image]][travis-url]
 
 [npm-img]: https://img.shields.io/npm/v/geohub.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/geohub
+[travis-image]: https://img.shields.io/travis/koopjs/geohub/master.svg?style=flat-square
+[travis-url]: https://travis-ci.org/koopjs/geohub
 
 Extracts and parses GeoJSON files from Github repos and gists using the Github API.
 
