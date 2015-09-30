@@ -1,28 +1,31 @@
 {
   "name": "geohub",
-  "version": "0.3.2",
   "description": "A geojson in github extractor",
-  "main": "index.js",
-  "scripts": {
-    "test": "standard && vows --spec"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/chelm/geohub.git"
-  },
-  "keywords": [
-    "geojson",
-    "github"
-  ],
+  "version": "0.3.2",
+  "author": "Chris Helm",
+  "bugs": "https://github.com/koopjs/geohub/issues",
   "dependencies": {
-    "async": "^0.2.10",
+    "async": "^1.4.2",
     "request": "^2.22.0"
   },
   "devDependencies": {
     "standard": "^5.3.1",
-    "vows": "^0.8.1"
+    "tap-spec": "^4.1.0",
+    "tape": "^4.2.0"
   },
-  "author": "Chris Helm",
+  "homepage": "https://github.com/koopjs/geohub",
+  "keywords": [
+    "geojson",
+    "gist",
+    "github"
+  ],
   "license": "MIT",
-  "readmeFilename": "README.md"
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/koopjs/geohub.git"
+  },
+  "scripts": {
+    "test": "standard && tape test/*-test.js | tap-spec"
+  }
 }
