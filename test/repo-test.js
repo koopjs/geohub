@@ -1,12 +1,17 @@
 var test = require('tape')
-var Geohub = require('../')
+var geohub = require('../')
 var user = 'chelm'
 var repo = 'grunt-geo'
 var path = 'forks'
 var token = process.env.GITHUB_TOKEN
 
 test('When requesting geojson from a repo with geojson', function (t) {
-  Geohub.repo(user, repo, path, token, function (err, data) {
+  geohub.repo({
+    user: user,
+    repo: repo,
+    path: path,
+    token: token
+  }, function (err, data) {
     t.error(err, 'does not error')
     t.ok(data, 'data exists')
     t.equal(data.type, 'FeatureCollection', 'data is a FeatureCollection')
@@ -16,7 +21,12 @@ test('When requesting geojson from a repo with geojson', function (t) {
 })
 
 test('When checking the sha of a file', function (t) {
-  Geohub.repoSha(user, repo, 'forks.geojson', token, function (err, data) {
+  geohub.repoSha({
+    user: user,
+    repo: repo,
+    path: 'forks.geojson',
+    token: token
+  }, function (err, data) {
     t.error(err, 'does not error')
     t.ok(data, 'data exists')
     t.equal(typeof data, 'string', 'data is a string')
@@ -25,7 +35,12 @@ test('When checking the sha of a file', function (t) {
 })
 
 test('When only passing in a user/repo', function (t) {
-  Geohub.repo(user, repo, null, token, function (err, data) {
+  geohub.repo({
+    user: user,
+    repo: repo,
+    path: null,
+    token: token
+  }, function (err, data) {
     t.error(err, 'does not error')
     t.ok(data, 'data exists')
     t.equal(data.length, 3, 'data has length of 3')
@@ -43,7 +58,12 @@ test('When only passing in a user/repo', function (t) {
 })
 
 test('When only passing in a user/repo with a path that is a dir', function (t) {
-  Geohub.repo(user, repo, 'samples', token, function (err, data) {
+  geohub.repo({
+    user: user,
+    repo: repo,
+    path: 'samples',
+    token: token
+  }, function (err, data) {
     t.error(err, 'does not error')
     t.ok(data, 'data exists')
     t.equal(data.length, 7, 'data has length of 7')

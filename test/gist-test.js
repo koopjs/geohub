@@ -1,12 +1,12 @@
 var test = require('tape')
-var Geohub = require('../')
+var geohub = require('../')
 var gist1 = '6021269'
 var gist2 = '45b401a452cd69e0d5f1'
 var gist3 = 'c82a80ee4c5b91889efe'
 var token = process.env.GITHUB_TOKEN
 
 test('When requesting a gist with geojson', function (t) {
-  Geohub.gist({ id: gist1, token: token }, function (err, data) {
+  geohub.gist({ id: gist1, token: token }, function (err, data) {
     t.error(err, 'does not error')
     t.ok(data, 'data exists')
     t.equal(data.length, 1, 'data has length of 1')
@@ -18,7 +18,7 @@ test('When requesting a gist with geojson', function (t) {
 })
 
 test('When requesting a gist with a truncated file', function (t) {
-  Geohub.gist({ id: gist2, token: token }, function (err, data) {
+  geohub.gist({ id: gist2, token: token }, function (err, data) {
     t.error(err, 'does not error')
     t.ok(data, 'data exists')
     t.equal(data[0].name, 'overpass.geojson', 'file is overpass.geojson')
@@ -30,7 +30,7 @@ test('When requesting a gist with a truncated file', function (t) {
 })
 
 test('When requesting a gist with two geojson files', function (t) {
-  Geohub.gist({ id: gist3, token: token }, function (err, data) {
+  geohub.gist({ id: gist3, token: token }, function (err, data) {
     t.error(err, 'does not error')
     t.ok(data, 'data exists')
     t.equal(data.length, 2, 'two geojson files are returned')
@@ -45,7 +45,7 @@ test('When requesting a gist with two geojson files', function (t) {
 })
 
 test('When getting the sha for a gist', function (t) {
-  Geohub.gistSha({ id: gist1, token: token }, function (err, data) {
+  geohub.gistSha({ id: gist1, token: token }, function (err, data) {
     t.error(err, 'does not error')
     t.ok(data, 'data exists')
     t.equal(typeof data, 'string', 'data is a string')
