@@ -1,54 +1,44 @@
-var vows = require('vows')
-var assert = require('assert')
+var test = require('tape')
 var Geohub = require('../')
 var user = 'chelm'
 var repo = 'grunt-geo'
 var path = 'forks'
 
-vows.describe('Repo Access').addBatch({
-  'When requesting geojson from a repo with geojson': {
-    topic: function () {
-      Geohub.repo(user, repo, path, null, this.callback)
-    },
-    'It should return the geojson': function (err, data) {
-      assert.equal(err, null)
-      assert.notEqual(data, null)
-      assert.equal(data.type, 'FeatureCollection')
-      assert.notEqual(data.sha, null)
-    }
-  },
-  'when checking the sha of a file': {
-    topic: function () {
-      Geohub.repoSha(user, repo, 'forks.geojson', null, this.callback)
-    },
-    'It should return a sha': function (err, data) {
-      assert.equal(err, null)
-      assert.notEqual(data, null)
-      assert.equal(data, 'e3729d510e786be80126225579214a78cf06e7a1')
-    }
-  },
-  'when only passing in a user/repo': {
-    topic: function () {
-      Geohub.repo(user, repo, null, null, this.callback)
-    },
-    'It should return an array of geojson data': function (err, data) {
-      assert.equal(err, null)
-      assert.notEqual(data, null)
-      assert.notEqual(data.length, 0)
-      assert.equal(data.length, 3)
-      assert.equal(data[0].name, 'collaborators.geojson')
-      assert.notEqual(data[0].sha, null)
-    }
-  },
-  'when only passing in a user/repo with a path that is a dir': {
-    topic: function () {
-      Geohub.repo(user, repo, 'samples', null, this.callback)
-    },
-    'It should return an array of geojson data': function (err, data) {
-      assert.equal(err, null)
-      assert.notEqual(data, null)
-      assert.equal(data.length, 7)
-    }
-  }
+test('When requesting geojson from a repo with geojson', function (t) {
+  Geohub.repo(user, repo, path, null, function (err, data) {
+    t.error(err, 'does not error')
+    t.ok(data, 'data exists')
+    t.equal(data.type, 'FeatureCollection', 'data is a FeatureCollection')
+    t.ok(data.sha, 'data has sha property')
+    t.end()
+  })
+})
 
-}).export(module)
+test('When checking the sha of a file', function (t) {
+  Geohub.repoSha(user, repo, 'forks.geojson', null, function (err, data) {
+    t.error(err, 'does not error')
+    t.ok(data, 'data exists')
+    t.equal(typeof data, 'string', 'data is a string')
+    t.end()
+  })
+})
+
+test('When only passing in a user/repo', function (t) {
+  Geohub.repo(user, repo, null, null, function (err, data) {
+    t.error(err, 'does not error')
+    t.ok(data, 'data exists')
+    t.equal(data.length, 3, 'data has length of 3')
+    t.equal(data[0].name, 'forks.geojson', 'first object in data has name of forks.geojson')
+    t.ok(data[0].sha, 'first object in data has sha property')
+    t.end()
+  })
+})
+
+test('When only passing in a user/repo with a path that is a dir', function (t) {
+  Geohub.repo(user, repo, 'samples', null, function (err, data) {
+    t.error(err, 'does not error')
+    t.ok(data, 'data exists')
+    t.equal(data.length, 7, 'data has length of 7')
+    t.end()
+  })
+})
