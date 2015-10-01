@@ -103,3 +103,19 @@ test('When passing user, repo, path, and branch', function (t) {
     t.end()
   })
 })
+
+if (token) {
+  test('When requesting geojson from a repo with geojson without a token', function (t) {
+    geohub.repo({
+      user: user,
+      repo: repo,
+      path: path
+    }, function (err, data) {
+      t.error(err, 'does not error')
+      t.ok(data, 'data exists')
+      t.equal(data.type, 'FeatureCollection', 'data is a FeatureCollection')
+      t.ok(data.sha, 'data has sha property')
+      t.end()
+    })
+  })
+}

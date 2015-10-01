@@ -52,3 +52,17 @@ test('When getting the sha for a gist', function (t) {
     t.end()
   })
 })
+
+if (token) {
+  test('When making a request without a token', function (t) {
+    geohub.gist({ id: gist1 }, function (err, data) {
+      t.error(err, 'does not error')
+      t.ok(data, 'data exists')
+      t.equal(data.length, 1, 'data has length of 1')
+      t.equal(data[0].type, 'FeatureCollection', 'data contains FeatureCollection geojson object')
+      t.equal(data[0].features.length, 1, 'FeatureCollection has a feature')
+      t.ok(data[0].updated_at, 'FeatureCollection has updated_at property')
+      t.end()
+    })
+  })
+}
