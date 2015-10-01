@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## [1.0.1] - 2015-10-01
 ### Fixed
 * 401 on unauthenticated requests ([#9](https://github.com/koopjs/geohub/issues/4))
 
@@ -36,3 +36,5 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 0.3.2 - 2014-08-11
 * legacy release
+
+[1.0.1]: https://github.com/koopjs/geohub/compare/v1.0.0...v1.0.1
