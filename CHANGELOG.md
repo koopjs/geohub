@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+### Fixed
+* move `debug` a from devDependences to dependencies (oops)
+
 ## [1.0.1] - 2015-10-01
 ### Fixed
 * 401 on unauthenticated requests ([#9](https://github.com/koopjs/geohub/issues/4))
