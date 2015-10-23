@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Added
+* introduced support for fetching GeoJSON from files with an extension other than `.geojson` (ex: `.json`)
+
 ## [1.0.2] - 2015-10-01
 ### Fixed
 * move `debug` a from devDependences to dependencies (oops)
@@ -41,5 +46,6 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.3.2 - 2014-08-11
 * legacy release
 
+[Unreleased]: https://github.com/koopjs/geohub/compare/v1.0.2...HEAD
 [1.0.2]: https://github.com/koopjs/geohub/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/koopjs/geohub/compare/v1.0.0...v1.0.1
