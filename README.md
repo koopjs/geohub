@@ -1,5 +1,7 @@
 # geohub
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/koopjs/geohub.svg)](https://greenkeeper.io/)
+
 > GeoJSON extractor for Github repos and gists.
 
 [![npm version][npm-img]][npm-url]
