@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## [1.0.4] - 2018-11-17
 ### Fixed
 * return callback in request handling when JSON parsing fails.
 
@@ -50,6 +50,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## 0.3.2 - 2014-08-11
 * legacy release
 
+[1.0.4]: https://github.com/koopjs/geohub/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/koopjs/geohub/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/koopjs/geohub/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/koopjs/geohub/compare/v1.0.0...v1.0.1
