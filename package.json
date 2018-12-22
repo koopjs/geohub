@@ -6,7 +6,7 @@
   "bugs": "https://github.com/koopjs/geohub/issues",
   "dependencies": {
     "async": "^2.5.0",
-    "debug": "^3.0.0",
+    "debug": "^4.1.1",
     "request": "^2.22.0"
   },
   "devDependencies": {
